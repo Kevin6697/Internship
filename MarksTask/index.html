@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <div id="mainContainer">
+      <div id="formContainer">
+        <form id="myForm" method="post">
+          <div id="cols-25">
+            Name :
+          </div>
+          <div id="cols-75">
+            <input type="text" name="txtname" />
+          </div>
+          <div id="cols-25">
+            Maths:
+          </div>
+          <div id="cols-75">
+            <input type="number" name="txtmaths" />
+          </div>
+          <div id="cols-25">
+            English:
+          </div>
+          <div id="cols-75">
+            <input type="number" name="txtenglish" />
+          </div>
+          <div id="cols-25">
+            Passing Year:
+          </div>
+          <div id="cols-75">
+            <input type="number" name="txtpassingyear" />
+          </div>
+          <div id="cols-25">
+            <br />
+          </div>
+          <div id="cols-75">
+            <input type="button" value="Submit" onclick="getValues();" />
+          </div>
+        </form>
+      </div>
+      <p id="displayErrors"></p>
+      <table id="dataDisplay" border=0>
+
+      </table>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
