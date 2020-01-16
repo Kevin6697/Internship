@@ -1,5 +1,9 @@
 var errors = "Validations : ";
 var student = {};
+if (sessionStorage.getItem("student") == null) {
+  var allStudent = [];
+  sessionStorage.setItem("student", JSON.stringify(allStudent));
+}
 function getValues() {
   var formElements = document.getElementById("myForm");
   var name = formElements.txtname.value;
@@ -45,6 +49,7 @@ function getValues() {
 }
 function displayError() {
   if (errors != "Validations : ") {
+    document.getElementById("displayErrors").style.color = "red";
     document.getElementById("displayErrors").innerHTML = errors;
     errors = "Validations : ";
     return false;
@@ -60,25 +65,19 @@ function calculateAverage(maths, english) {
   return (tmpMaths + tmpEnglish) / 2;
 }
 function setValues() {
-  var tmpIndex = sessionStorage.getItem("count");
-  tmpIndex++;
-  sessionStorage.setItem("count", tmpIndex);
-  sessionStorage.setItem(`index${tmpIndex}`, tmpIndex);
-  sessionStorage.setItem(`name${tmpIndex}`, student["name"]);
-  sessionStorage.setItem(`maths${tmpIndex}`, student["maths"]);
-  sessionStorage.setItem(`english${tmpIndex}`, student["english"]);
-  sessionStorage.setItem(`average${tmpIndex}`, student["average"]);
-  sessionStorage.setItem(`passingYear${tmpIndex}`, student["passingYear"]);
-  sessionStorage.setItem(`createdDate${tmpIndex}`, student["createdDate"]);
+  var allStudentValue = JSON.parse(sessionStorage.getItem("student"));
+  allStudentValue.push(student);
+  sessionStorage.setItem("student", JSON.stringify(allStudentValue));
   window.location.href = "index.html";
 }
 function tableDisplay() {
-    if(sessionStorage.getItem("count")!=null)
-    {
-        var tmp = "<th>Index</th><th>Name</th><th>Maths</th><th>English</th><th>Average</th><th>Passing Year</th><th>Created Date</th>";
-        document.getElementById("dataDisplay").innerHTML = tmp;
-    }
-  for (var i = 1; i <= sessionStorage.getItem("count"); i++) {
+  var allStudentValue = JSON.parse(sessionStorage.getItem("student"));
+  if (allStudentValue.length != 0) {
+    var tmp =
+      "<th>Index</th><th>Name</th><th>Maths</th><th>English</th><th>Average</th><th>Passing Year</th><th>Created Date</th>";
+    document.getElementById("dataDisplay").innerHTML = tmp;
+  }
+  for (var i = 0; i < allStudentValue.length; i++) {
     var row = dataDisplay.insertRow();
     document.getElementById("dataDisplay").border = "1px";
     var c1 = row.insertCell();
@@ -88,13 +87,13 @@ function tableDisplay() {
     var c5 = row.insertCell();
     var c6 = row.insertCell();
     var c7 = row.insertCell();
-    c1.innerHTML = i;
-    c2.innerHTML = sessionStorage.getItem(`name${i}`);
-    c3.innerHTML = sessionStorage.getItem(`maths${i}`);
-    c4.innerHTML = sessionStorage.getItem(`english${i}`);
-    c5.innerHTML = sessionStorage.getItem(`average${i}`);
-    c6.innerHTML = sessionStorage.getItem(`passingYear${i}`);
-    c7.innerHTML = sessionStorage.getItem(`createdDate${i}`);
+    c1.innerHTML = i + 1;
+    c2.innerHTML = allStudentValue[i].name;
+    c3.innerHTML = allStudentValue[i].maths;
+    c4.innerHTML = allStudentValue[i].english;
+    c5.innerHTML = allStudentValue[i].average;
+    c6.innerHTML = allStudentValue[i].passingYear;
+    c7.innerHTML = allStudentValue[i].createdDate;
   }
 }
 tableDisplay();
